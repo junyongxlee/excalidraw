@@ -196,7 +196,7 @@ let isDraggingScrollBar: boolean = false;
 let currentScrollBars: ScrollBars = { horizontal: null, vertical: null };
 let touchTimeout = 0;
 let invalidateContextMenu = false;
-let scrollable = false;
+const isScrollable = false;
 
 let lastPointerUp: ((event: any) => void) | null = null;
 const gesture: Gesture = {
@@ -1309,8 +1309,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           }
           return prop === "key"
             ? // CapsLock inverts capitalization based on ShiftKey, so invert
-            // it back
-            event.shiftKey
+              // it back
+              event.shiftKey
               ? ev.key.toUpperCase()
               : ev.key.toLowerCase()
             : value;
@@ -1435,7 +1435,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       }
     }
     if (event.key === KEYS.SPACE && gesture.pointers.size === 0) {
-      if (scrollable === true) {
+      if (isScrollable === true) {
         isHoldingSpace = true;
         document.documentElement.style.cursor = CURSOR_TYPE.GRABBING;
       }
@@ -1689,30 +1689,30 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     const element = existingTextElement
       ? existingTextElement
       : newTextElement({
-        x: parentCenterPosition
-          ? parentCenterPosition.elementCenterX
-          : sceneX,
-        y: parentCenterPosition
-          ? parentCenterPosition.elementCenterY
-          : sceneY,
-        strokeColor: this.state.currentItemStrokeColor,
-        backgroundColor: this.state.currentItemBackgroundColor,
-        fillStyle: this.state.currentItemFillStyle,
-        strokeWidth: this.state.currentItemStrokeWidth,
-        strokeStyle: this.state.currentItemStrokeStyle,
-        roughness: this.state.currentItemRoughness,
-        opacity: this.state.currentItemOpacity,
-        strokeSharpness: this.state.currentItemStrokeSharpness,
-        text: "",
-        fontSize: this.state.currentItemFontSize,
-        fontFamily: this.state.currentItemFontFamily,
-        textAlign: parentCenterPosition
-          ? "center"
-          : this.state.currentItemTextAlign,
-        verticalAlign: parentCenterPosition
-          ? "middle"
-          : DEFAULT_VERTICAL_ALIGN,
-      });
+          x: parentCenterPosition
+            ? parentCenterPosition.elementCenterX
+            : sceneX,
+          y: parentCenterPosition
+            ? parentCenterPosition.elementCenterY
+            : sceneY,
+          strokeColor: this.state.currentItemStrokeColor,
+          backgroundColor: this.state.currentItemBackgroundColor,
+          fillStyle: this.state.currentItemFillStyle,
+          strokeWidth: this.state.currentItemStrokeWidth,
+          strokeStyle: this.state.currentItemStrokeStyle,
+          roughness: this.state.currentItemRoughness,
+          opacity: this.state.currentItemOpacity,
+          strokeSharpness: this.state.currentItemStrokeSharpness,
+          text: "",
+          fontSize: this.state.currentItemFontSize,
+          fontFamily: this.state.currentItemFontFamily,
+          textAlign: parentCenterPosition
+            ? "center"
+            : this.state.currentItemTextAlign,
+          verticalAlign: parentCenterPosition
+            ? "middle"
+            : DEFAULT_VERTICAL_ALIGN,
+        });
 
     this.setState({ editingElement: element });
 
@@ -3380,8 +3380,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         (isBindingEnabled(this.state)
           ? bindOrUnbindSelectedElements
           : unbindLinearElements)(
-            getSelectedElements(this.scene.getElements(), this.state),
-          );
+          getSelectedElements(this.scene.getElements(), this.state),
+        );
       }
 
       if (!elementLocked && elementType !== "draw") {
@@ -3441,11 +3441,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.setState({
       suggestedBindings:
         hoveredBindableElement != null &&
-          !isLinearElementSimpleAndAlreadyBound(
-            linearElement,
-            oppositeBindingBoundElement?.id,
-            hoveredBindableElement,
-          )
+        !isLinearElementSimpleAndAlreadyBound(
+          linearElement,
+          oppositeBindingBoundElement?.id,
+          hoveredBindableElement,
+        )
           ? [hoveredBindableElement]
           : [],
     });
@@ -3466,8 +3466,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       // element from it
       editingGroupId:
         prevState.editingGroupId &&
-          hitElement != null &&
-          isElementInGroup(hitElement, prevState.editingGroupId)
+        hitElement != null &&
+        isElementInGroup(hitElement, prevState.editingGroupId)
           ? prevState.editingGroupId
           : null,
     }));
@@ -3716,10 +3716,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       const viewModeOptions = [
         ...options,
         typeof this.props.gridModeEnabled === "undefined" &&
-        actionToggleGridMode,
+          actionToggleGridMode,
         typeof this.props.zenModeEnabled === "undefined" && actionToggleZenMode,
         typeof this.props.viewModeEnabled === "undefined" &&
-        actionToggleViewMode,
+          actionToggleViewMode,
         actionToggleStats,
       ];
 
@@ -3738,34 +3738,34 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       ContextMenu.push({
         options: [
           _isMobile &&
-          navigator.clipboard && {
-            name: "paste",
-            perform: (elements, appStates) => {
-              this.pasteFromClipboard(null);
-              return {
-                commitToHistory: false,
-              };
+            navigator.clipboard && {
+              name: "paste",
+              perform: (elements, appStates) => {
+                this.pasteFromClipboard(null);
+                return {
+                  commitToHistory: false,
+                };
+              },
+              contextItemLabel: "labels.paste",
             },
-            contextItemLabel: "labels.paste",
-          },
           _isMobile && navigator.clipboard && separator,
           probablySupportsClipboardBlob &&
-          elements.length > 0 &&
-          actionCopyAsPng,
+            elements.length > 0 &&
+            actionCopyAsPng,
           probablySupportsClipboardWriteText &&
-          elements.length > 0 &&
-          actionCopyAsSvg,
+            elements.length > 0 &&
+            actionCopyAsSvg,
           ((probablySupportsClipboardBlob && elements.length > 0) ||
             (probablySupportsClipboardWriteText && elements.length > 0)) &&
-          separator,
+            separator,
           actionSelectAll,
           separator,
           typeof this.props.gridModeEnabled === "undefined" &&
-          actionToggleGridMode,
+            actionToggleGridMode,
           typeof this.props.zenModeEnabled === "undefined" &&
-          actionToggleZenMode,
+            actionToggleZenMode,
           typeof this.props.viewModeEnabled === "undefined" &&
-          actionToggleViewMode,
+            actionToggleViewMode,
           actionToggleStats,
         ],
         top: clientY,
@@ -3796,16 +3796,16 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         _isMobile && actionCut,
         _isMobile && navigator.clipboard && actionCopy,
         _isMobile &&
-        navigator.clipboard && {
-          name: "paste",
-          perform: (elements, appStates) => {
-            this.pasteFromClipboard(null);
-            return {
-              commitToHistory: false,
-            };
+          navigator.clipboard && {
+            name: "paste",
+            perform: (elements, appStates) => {
+              this.pasteFromClipboard(null);
+              return {
+                commitToHistory: false,
+              };
+            },
+            contextItemLabel: "labels.paste",
           },
-          contextItemLabel: "labels.paste",
-        },
         _isMobile && separator,
         ...options,
         separator,
@@ -3835,7 +3835,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   private handleWheel = withBatchedUpdates((event: WheelEvent) => {
     event.preventDefault();
 
-    if (scrollable) {
+    if (isScrollable) {
       if (isPanning) {
         return;
       }
