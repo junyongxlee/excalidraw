@@ -196,6 +196,7 @@ let isDraggingScrollBar: boolean = false;
 let currentScrollBars: ScrollBars = { horizontal: null, vertical: null };
 let touchTimeout = 0;
 let invalidateContextMenu = false;
+let scrollable = false;
 
 let lastPointerUp: ((event: any) => void) | null = null;
 const gesture: Gesture = {
@@ -1308,8 +1309,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           }
           return prop === "key"
             ? // CapsLock inverts capitalization based on ShiftKey, so invert
-              // it back
-              event.shiftKey
+            // it back
+            event.shiftKey
               ? ev.key.toUpperCase()
               : ev.key.toLowerCase()
             : value;
@@ -1434,8 +1435,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       }
     }
     if (event.key === KEYS.SPACE && gesture.pointers.size === 0) {
-      isHoldingSpace = true;
-      document.documentElement.style.cursor = CURSOR_TYPE.GRABBING;
+      if (scrollable === true) {
+        isHoldingSpace = true;
+        document.documentElement.style.cursor = CURSOR_TYPE.GRABBING;
+      }
     }
   });
 
@@ -1686,30 +1689,30 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     const element = existingTextElement
       ? existingTextElement
       : newTextElement({
-          x: parentCenterPosition
-            ? parentCenterPosition.elementCenterX
-            : sceneX,
-          y: parentCenterPosition
-            ? parentCenterPosition.elementCenterY
-            : sceneY,
-          strokeColor: this.state.currentItemStrokeColor,
-          backgroundColor: this.state.currentItemBackgroundColor,
-          fillStyle: this.state.currentItemFillStyle,
-          strokeWidth: this.state.currentItemStrokeWidth,
-          strokeStyle: this.state.currentItemStrokeStyle,
-          roughness: this.state.currentItemRoughness,
-          opacity: this.state.currentItemOpacity,
-          strokeSharpness: this.state.currentItemStrokeSharpness,
-          text: "",
-          fontSize: this.state.currentItemFontSize,
-          fontFamily: this.state.currentItemFontFamily,
-          textAlign: parentCenterPosition
-            ? "center"
-            : this.state.currentItemTextAlign,
-          verticalAlign: parentCenterPosition
-            ? "middle"
-            : DEFAULT_VERTICAL_ALIGN,
-        });
+        x: parentCenterPosition
+          ? parentCenterPosition.elementCenterX
+          : sceneX,
+        y: parentCenterPosition
+          ? parentCenterPosition.elementCenterY
+          : sceneY,
+        strokeColor: this.state.currentItemStrokeColor,
+        backgroundColor: this.state.currentItemBackgroundColor,
+        fillStyle: this.state.currentItemFillStyle,
+        strokeWidth: this.state.currentItemStrokeWidth,
+        strokeStyle: this.state.currentItemStrokeStyle,
+        roughness: this.state.currentItemRoughness,
+        opacity: this.state.currentItemOpacity,
+        strokeSharpness: this.state.currentItemStrokeSharpness,
+        text: "",
+        fontSize: this.state.currentItemFontSize,
+        fontFamily: this.state.currentItemFontFamily,
+        textAlign: parentCenterPosition
+          ? "center"
+          : this.state.currentItemTextAlign,
+        verticalAlign: parentCenterPosition
+          ? "middle"
+          : DEFAULT_VERTICAL_ALIGN,
+      });
 
     this.setState({ editingElement: element });
 
@@ -3377,8 +3380,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         (isBindingEnabled(this.state)
           ? bindOrUnbindSelectedElements
           : unbindLinearElements)(
-          getSelectedElements(this.scene.getElements(), this.state),
-        );
+            getSelectedElements(this.scene.getElements(), this.state),
+          );
       }
 
       if (!elementLocked && elementType !== "draw") {
@@ -3438,11 +3441,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.setState({
       suggestedBindings:
         hoveredBindableElement != null &&
-        !isLinearElementSimpleAndAlreadyBound(
-          linearElement,
-          oppositeBindingBoundElement?.id,
-          hoveredBindableElement,
-        )
+          !isLinearElementSimpleAndAlreadyBound(
+            linearElement,
+            oppositeBindingBoundElement?.id,
+            hoveredBindableElement,
+          )
           ? [hoveredBindableElement]
           : [],
     });
@@ -3463,8 +3466,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       // element from it
       editingGroupId:
         prevState.editingGroupId &&
-        hitElement != null &&
-        isElementInGroup(hitElement, prevState.editingGroupId)
+          hitElement != null &&
+          isElementInGroup(hitElement, prevState.editingGroupId)
           ? prevState.editingGroupId
           : null,
     }));
@@ -3713,10 +3716,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       const viewModeOptions = [
         ...options,
         typeof this.props.gridModeEnabled === "undefined" &&
-          actionToggleGridMode,
+        actionToggleGridMode,
         typeof this.props.zenModeEnabled === "undefined" && actionToggleZenMode,
         typeof this.props.viewModeEnabled === "undefined" &&
-          actionToggleViewMode,
+        actionToggleViewMode,
         actionToggleStats,
       ];
 
@@ -3735,34 +3738,34 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       ContextMenu.push({
         options: [
           _isMobile &&
-            navigator.clipboard && {
-              name: "paste",
-              perform: (elements, appStates) => {
-                this.pasteFromClipboard(null);
-                return {
-                  commitToHistory: false,
-                };
-              },
-              contextItemLabel: "labels.paste",
+          navigator.clipboard && {
+            name: "paste",
+            perform: (elements, appStates) => {
+              this.pasteFromClipboard(null);
+              return {
+                commitToHistory: false,
+              };
             },
+            contextItemLabel: "labels.paste",
+          },
           _isMobile && navigator.clipboard && separator,
           probablySupportsClipboardBlob &&
-            elements.length > 0 &&
-            actionCopyAsPng,
+          elements.length > 0 &&
+          actionCopyAsPng,
           probablySupportsClipboardWriteText &&
-            elements.length > 0 &&
-            actionCopyAsSvg,
+          elements.length > 0 &&
+          actionCopyAsSvg,
           ((probablySupportsClipboardBlob && elements.length > 0) ||
             (probablySupportsClipboardWriteText && elements.length > 0)) &&
-            separator,
+          separator,
           actionSelectAll,
           separator,
           typeof this.props.gridModeEnabled === "undefined" &&
-            actionToggleGridMode,
+          actionToggleGridMode,
           typeof this.props.zenModeEnabled === "undefined" &&
-            actionToggleZenMode,
+          actionToggleZenMode,
           typeof this.props.viewModeEnabled === "undefined" &&
-            actionToggleViewMode,
+          actionToggleViewMode,
           actionToggleStats,
         ],
         top: clientY,
@@ -3793,16 +3796,16 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         _isMobile && actionCut,
         _isMobile && navigator.clipboard && actionCopy,
         _isMobile &&
-          navigator.clipboard && {
-            name: "paste",
-            perform: (elements, appStates) => {
-              this.pasteFromClipboard(null);
-              return {
-                commitToHistory: false,
-              };
-            },
-            contextItemLabel: "labels.paste",
+        navigator.clipboard && {
+          name: "paste",
+          perform: (elements, appStates) => {
+            this.pasteFromClipboard(null);
+            return {
+              commitToHistory: false,
+            };
           },
+          contextItemLabel: "labels.paste",
+        },
         _isMobile && separator,
         ...options,
         separator,
@@ -3832,70 +3835,72 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   private handleWheel = withBatchedUpdates((event: WheelEvent) => {
     event.preventDefault();
 
-    if (isPanning) {
-      return;
-    }
-
-    const { deltaX, deltaY } = event;
-    const { selectedElementIds, previousSelectedElementIds } = this.state;
-    // note that event.ctrlKey is necessary to handle pinch zooming
-    if (event.metaKey || event.ctrlKey) {
-      const sign = Math.sign(deltaY);
-      const MAX_STEP = 10;
-      let delta = Math.abs(deltaY);
-      if (delta > MAX_STEP) {
-        delta = MAX_STEP;
-      }
-      delta *= sign;
-      if (Object.keys(previousSelectedElementIds).length !== 0) {
-        setTimeout(() => {
-          this.setState({
-            selectedElementIds: previousSelectedElementIds,
-            previousSelectedElementIds: {},
-          });
-        }, 1000);
+    if (scrollable) {
+      if (isPanning) {
+        return;
       }
 
-      let newZoom = this.state.zoom.value - delta / 100;
-      // increase zoom steps the more zoomed-in we are (applies to >100% only)
-      newZoom += Math.log10(Math.max(1, this.state.zoom.value)) * -sign;
-      // round to nearest step
-      newZoom = Math.round(newZoom * ZOOM_STEP * 100) / (ZOOM_STEP * 100);
+      const { deltaX, deltaY } = event;
+      const { selectedElementIds, previousSelectedElementIds } = this.state;
+      // note that event.ctrlKey is necessary to handle pinch zooming
+      if (event.metaKey || event.ctrlKey) {
+        const sign = Math.sign(deltaY);
+        const MAX_STEP = 10;
+        let delta = Math.abs(deltaY);
+        if (delta > MAX_STEP) {
+          delta = MAX_STEP;
+        }
+        delta *= sign;
+        if (Object.keys(previousSelectedElementIds).length !== 0) {
+          setTimeout(() => {
+            this.setState({
+              selectedElementIds: previousSelectedElementIds,
+              previousSelectedElementIds: {},
+            });
+          }, 1000);
+        }
 
-      this.setState(({ zoom, offsetLeft, offsetTop }) => ({
-        zoom: getNewZoom(
-          getNormalizedZoom(newZoom),
-          zoom,
-          { left: offsetLeft, top: offsetTop },
-          {
-            x: cursorX,
-            y: cursorY,
-          },
-        ),
-        selectedElementIds: {},
-        previousSelectedElementIds:
-          Object.keys(selectedElementIds).length !== 0
-            ? selectedElementIds
-            : previousSelectedElementIds,
-        shouldCacheIgnoreZoom: true,
+        let newZoom = this.state.zoom.value - delta / 100;
+        // increase zoom steps the more zoomed-in we are (applies to >100% only)
+        newZoom += Math.log10(Math.max(1, this.state.zoom.value)) * -sign;
+        // round to nearest step
+        newZoom = Math.round(newZoom * ZOOM_STEP * 100) / (ZOOM_STEP * 100);
+
+        this.setState(({ zoom, offsetLeft, offsetTop }) => ({
+          zoom: getNewZoom(
+            getNormalizedZoom(newZoom),
+            zoom,
+            { left: offsetLeft, top: offsetTop },
+            {
+              x: cursorX,
+              y: cursorY,
+            },
+          ),
+          selectedElementIds: {},
+          previousSelectedElementIds:
+            Object.keys(selectedElementIds).length !== 0
+              ? selectedElementIds
+              : previousSelectedElementIds,
+          shouldCacheIgnoreZoom: true,
+        }));
+        this.resetShouldCacheIgnoreZoomDebounced();
+        return;
+      }
+
+      // scroll horizontally when shift pressed
+      if (event.shiftKey) {
+        this.setState(({ zoom, scrollX }) => ({
+          // on Mac, shift+wheel tends to result in deltaX
+          scrollX: scrollX - (deltaY || deltaX) / zoom.value,
+        }));
+        return;
+      }
+
+      this.setState(({ zoom, scrollX, scrollY }) => ({
+        scrollX: scrollX - deltaX / zoom.value,
+        scrollY: scrollY - deltaY / zoom.value,
       }));
-      this.resetShouldCacheIgnoreZoomDebounced();
-      return;
     }
-
-    // scroll horizontally when shift pressed
-    if (event.shiftKey) {
-      this.setState(({ zoom, scrollX }) => ({
-        // on Mac, shift+wheel tends to result in deltaX
-        scrollX: scrollX - (deltaY || deltaX) / zoom.value,
-      }));
-      return;
-    }
-
-    this.setState(({ zoom, scrollX, scrollY }) => ({
-      scrollX: scrollX - deltaX / zoom.value,
-      scrollY: scrollY - deltaY / zoom.value,
-    }));
   });
 
   private getTextWysiwygSnappedToCenterPosition(
