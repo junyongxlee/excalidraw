@@ -1435,7 +1435,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       }
     }
     if (event.key === KEYS.SPACE && gesture.pointers.size === 0) {
-      if (isScrollable === true) {
+      if (isScrollable) {
         isHoldingSpace = true;
         document.documentElement.style.cursor = CURSOR_TYPE.GRABBING;
       }
