@@ -11,7 +11,7 @@
 *.log
 # *.tgz
 build
-dist
+# dist
 firebase
 logs
 node_modules
