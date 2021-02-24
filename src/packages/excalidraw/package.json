@@ -1,5 +1,5 @@
 {
-  "name": "@excalidraw/excalidraw",
+  "name": "junyongxlee/excalidraw",
   "version": "0.3.1",
   "main": "dist/excalidraw.min.js",
   "files": [

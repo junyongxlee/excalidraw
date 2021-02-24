@@ -9,7 +9,7 @@
 .vercel
 .vscode
 *.log
-*.tgz
+# *.tgz
 build
 dist
 firebase
