@@ -41,7 +41,7 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { Tooltip } from "./Tooltip";
 import { UserList } from "./UserList";
-import { distributeVertically } from "../actions";
+// import { distributeVertically } from "../actions";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -65,7 +65,7 @@ interface LayerUIProps {
   renderCustomFooter?: (isMobile: boolean) => JSX.Element;
   viewModeEnabled: boolean;
   showAppMenuBottom: boolean;
-  showCanvasAction:boolean;
+  showCanvasAction: boolean;
 }
 
 const useOnClickOutside = (
@@ -292,16 +292,16 @@ const LibraryMenu = ({
           {t("labels.libraryLoadingMessage")}
         </div>
       ) : (
-          <LibraryMenuItems
-            library={libraryItems}
-            onRemoveFromLibrary={removeFromLibrary}
-            onAddToLibrary={addToLibrary}
-            onInsertShape={onInsertShape}
-            pendingElements={pendingElements}
-            setAppState={setAppState}
-            setLibraryItems={setLibraryItems}
-          />
-        )}
+        <LibraryMenuItems
+          library={libraryItems}
+          onRemoveFromLibrary={removeFromLibrary}
+          onAddToLibrary={addToLibrary}
+          onInsertShape={onInsertShape}
+          pendingElements={pendingElements}
+          setAppState={setAppState}
+          setLibraryItems={setLibraryItems}
+        />
+      )}
     </Island>
   );
 };
@@ -374,9 +374,9 @@ const LayerUI = ({
         onExportToBackend={
           onExportToBackend
             ? (elements) => {
-              onExportToBackend &&
-                onExportToBackend(elements, appState, canvas);
-            }
+                onExportToBackend &&
+                  onExportToBackend(elements, appState, canvas);
+              }
             : undefined
         }
       />
@@ -503,9 +503,13 @@ const LayerUI = ({
             gap={4}
             className={clsx({ "disable-pointerEvents": zenModeEnabled })}
           >
-            {showCanvasAction && <div>{viewModeEnabled
-              ? renderViewModeCanvasActions()
-              : renderCanvasActions()}</div>}
+            {showCanvasAction && (
+              <div>
+                {viewModeEnabled
+                  ? renderViewModeCanvasActions()
+                  : renderCanvasActions()}
+              </div>
+            )}
 
             {shouldRenderSelectedShapeActions && renderSelectedShapeActions()}
           </Stack.Col>
@@ -666,33 +670,33 @@ const LayerUI = ({
       />
     </>
   ) : (
-      <div
-        className={clsx("layer-ui__wrapper", {
-          "disable-pointerEvents":
-            appState.draggingElement ||
-            appState.resizingElement ||
-            (appState.editingElement && !isTextElement(appState.editingElement)),
-        })}
-      >
-        {dialogs}
-        {renderFixedSideContainer()}
-        {showAppMenuBottom && renderBottomAppMenu()}
-        {renderGitHubCorner()}
-        {renderFooter()}
-        {appState.scrolledOutside && (
-          <button
-            className="scroll-back-to-content"
-            onClick={() => {
-              setAppState({
-                ...calculateScrollCenter(elements, appState, canvas),
-              });
-            }}
-          >
-            {t("buttons.scrollBackToContent")}
-          </button>
-        )}
-      </div>
-    );
+    <div
+      className={clsx("layer-ui__wrapper", {
+        "disable-pointerEvents":
+          appState.draggingElement ||
+          appState.resizingElement ||
+          (appState.editingElement && !isTextElement(appState.editingElement)),
+      })}
+    >
+      {dialogs}
+      {renderFixedSideContainer()}
+      {showAppMenuBottom && renderBottomAppMenu()}
+      {renderGitHubCorner()}
+      {renderFooter()}
+      {appState.scrolledOutside && (
+        <button
+          className="scroll-back-to-content"
+          onClick={() => {
+            setAppState({
+              ...calculateScrollCenter(elements, appState, canvas),
+            });
+          }}
+        >
+          {t("buttons.scrollBackToContent")}
+        </button>
+      )}
+    </div>
+  );
 };
 
 const areEqual = (prev: LayerUIProps, next: LayerUIProps) => {
