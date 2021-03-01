@@ -200,6 +200,7 @@ let invalidateContextMenu = false;
 const isScrollable = false; // Scrolling and panning
 const showAppMenuBottom = false; //Disable bottom menu (zooming)
 const showCanvasAction = false; //Disable top menu (saving,loading)
+const showGitHubCorner = false; //Disable top-right github icon
 
 let lastPointerUp: ((event: any) => void) | null = null;
 const gesture: Gesture = {
@@ -441,6 +442,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         }}
       >
         <LayerUI
+          showGitHubCorner={showGitHubCorner}
           showCanvasAction={showCanvasAction}
           showAppMenuBottom={showAppMenuBottom}
           canvas={this.canvas}

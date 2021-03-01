@@ -66,6 +66,7 @@ interface LayerUIProps {
   viewModeEnabled: boolean;
   showAppMenuBottom: boolean;
   showCanvasAction: boolean;
+  showGitHubCorner: boolean;
 }
 
 const useOnClickOutside = (
@@ -324,6 +325,7 @@ const LayerUI = ({
   viewModeEnabled,
   showAppMenuBottom,
   showCanvasAction,
+  showGitHubCorner,
 }: LayerUIProps) => {
   const isMobile = useIsMobile();
 
@@ -681,7 +683,7 @@ const LayerUI = ({
       {dialogs}
       {renderFixedSideContainer()}
       {showAppMenuBottom && renderBottomAppMenu()}
-      {renderGitHubCorner()}
+      {showGitHubCorner && renderGitHubCorner()}
       {renderFooter()}
       {appState.scrolledOutside && (
         <button
