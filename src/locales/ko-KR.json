@@ -92,7 +92,8 @@
     "centerHorizontally": "수평으로 중앙 정렬",
     "distributeHorizontally": "수평으로 분배",
     "distributeVertically": "수직으로 분배",
-    "viewMode": "보기 모드"
+    "viewMode": "보기 모드",
+    "toggleExportColorScheme": ""
   },
   "buttons": {
     "clearReset": "캔버스 초기화",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "스타일 복사.",
     "copyToClipboard": "클립보드로 복사.",
-    "copyToClipboardAsPng": "클립보드로 PNG 이미지 복사.",
+    "copyToClipboardAsPng": "",
     "fileSaved": "",
-    "fileSavedToFilename": ""
+    "fileSavedToFilename": "",
+    "canvas": "",
+    "selection": ""
   }
 }

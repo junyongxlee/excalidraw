@@ -92,7 +92,8 @@
     "centerHorizontally": "Center horizontally",
     "distributeHorizontally": "Distribute horizontally",
     "distributeVertically": "Distribute vertically",
-    "viewMode": "View mode"
+    "viewMode": "View mode",
+    "toggleExportColorScheme": "Toggle export color scheme"
   },
   "buttons": {
     "clearReset": "Reset the canvas",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Copied styles.",
     "copyToClipboard": "Copied to clipboard.",
-    "copyToClipboardAsPng": "Copied to clipboard as PNG.",
+    "copyToClipboardAsPng": "Copied {{exportSelection}} to clipboard as PNG\n({{exportColorScheme}})",
     "fileSaved": "File saved.",
-    "fileSavedToFilename": "Saved to {filename}"
+    "fileSavedToFilename": "Saved to {filename}",
+    "canvas": "canvas",
+    "selection": "selection"
   }
 }

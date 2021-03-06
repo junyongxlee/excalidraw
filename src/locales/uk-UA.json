@@ -92,7 +92,8 @@
     "centerHorizontally": "Центрувати по горизонталі",
     "distributeHorizontally": "Розподілити по горизонталі",
     "distributeVertically": "Розподілити вертикально",
-    "viewMode": "Режим перегляду"
+    "viewMode": "Режим перегляду",
+    "toggleExportColorScheme": ""
   },
   "buttons": {
     "clearReset": "Очистити полотно",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Скопійовані стилі.",
     "copyToClipboard": "Скопіювати до буферу обміну.",
-    "copyToClipboardAsPng": "Скопійовано в буфер обміну як PNG.",
+    "copyToClipboardAsPng": "",
     "fileSaved": "Файл збережено.",
-    "fileSavedToFilename": "Збережено в {filename}"
+    "fileSavedToFilename": "Збережено в {filename}",
+    "canvas": "",
+    "selection": ""
   }
 }

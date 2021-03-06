@@ -92,7 +92,8 @@
     "centerHorizontally": "Centra orizzontalmente",
     "distributeHorizontally": "Distribuisci orizzontalmente",
     "distributeVertically": "Distribuisci verticalmente",
-    "viewMode": "Modalità visualizzazione"
+    "viewMode": "Modalità visualizzazione",
+    "toggleExportColorScheme": "Cambia lo schema di colori in esportazione"
   },
   "buttons": {
     "clearReset": "Svuota la tela",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Stili copiati.",
     "copyToClipboard": "Copiato negli appunti.",
-    "copyToClipboardAsPng": "Copiato negli appunti come PNG.",
+    "copyToClipboardAsPng": "{{exportSelection}} copiato negli appunti come PNG\n({{exportColorScheme}})",
     "fileSaved": "File salvato.",
-    "fileSavedToFilename": "Salvato in {filename}"
+    "fileSavedToFilename": "Salvato in {filename}",
+    "canvas": "tela",
+    "selection": "selezione"
   }
 }

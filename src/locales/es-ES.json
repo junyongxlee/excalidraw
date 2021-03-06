@@ -92,7 +92,8 @@
     "centerHorizontally": "Centrar horizontalmente",
     "distributeHorizontally": "Distribuir horizontalmente",
     "distributeVertically": "Distribuir verticalmente",
-    "viewMode": "Modo presentación"
+    "viewMode": "Modo presentación",
+    "toggleExportColorScheme": "Cambiar el esquema de colores de exportación"
   },
   "buttons": {
     "clearReset": "Limpiar lienzo y reiniciar el color de fondo",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Estilos copiados.",
     "copyToClipboard": "Copiado en el portapapeles.",
-    "copyToClipboardAsPng": "Copiado al portapapeles como PNG.",
+    "copyToClipboardAsPng": "Copiado {{exportSelection}} al portapapeles como PNG\n({{exportColorScheme}})",
     "fileSaved": "Archivo guardado.",
-    "fileSavedToFilename": "Guardado en {filename}"
+    "fileSavedToFilename": "Guardado en {filename}",
+    "canvas": "lienzo",
+    "selection": "selección"
   }
 }

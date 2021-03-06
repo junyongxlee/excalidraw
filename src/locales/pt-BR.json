@@ -92,7 +92,8 @@
     "centerHorizontally": "Centralizar horizontalmente",
     "distributeHorizontally": "Distribuir horizontalmente",
     "distributeVertically": "Distribuir verticalmente",
-    "viewMode": "Modo de visualização"
+    "viewMode": "Modo de visualização",
+    "toggleExportColorScheme": "Alternar esquema de cores de exportação"
   },
   "buttons": {
     "clearReset": "Limpar o canvas e redefinir a cor de fundo",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Estilos copiados.",
     "copyToClipboard": "Copiado para área de transferência.",
-    "copyToClipboardAsPng": "Copiado para a área de transferência como PNG.",
+    "copyToClipboardAsPng": "{{exportSelection}} copiado para a área de transferência como PNG ({{exportColorScheme}})",
     "fileSaved": "Arquivo salvo.",
-    "fileSavedToFilename": "Salvo em {filename}"
+    "fileSavedToFilename": "Salvo em {filename}",
+    "canvas": "tela",
+    "selection": "seleção"
   }
 }

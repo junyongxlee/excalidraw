@@ -92,7 +92,8 @@
     "centerHorizontally": "Центрирай хоризонтално",
     "distributeHorizontally": "Разпредели хоризонтално",
     "distributeVertically": "Разпредели вертикално",
-    "viewMode": "Изглед"
+    "viewMode": "Изглед",
+    "toggleExportColorScheme": ""
   },
   "buttons": {
     "clearReset": "Нулиране на платно",
@@ -244,8 +245,10 @@
   "toast": {
     "copyStyles": "Копирани стилове.",
     "copyToClipboard": "Копирано в клипборда.",
-    "copyToClipboardAsPng": "Копирано в клипборда като PNG.",
+    "copyToClipboardAsPng": "",
     "fileSaved": "",
-    "fileSavedToFilename": ""
+    "fileSavedToFilename": "",
+    "canvas": "",
+    "selection": ""
   }
 }
